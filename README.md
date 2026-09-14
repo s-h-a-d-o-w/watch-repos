@@ -14,7 +14,7 @@ supplied token belongs to. (Uses [this GitHub API](https://docs.github.com/en/re
       another-repo
 ```
 
-`GITHUB_TOKEN` cannot manage watching, so a personal access token is required - read access to "Repository/Metadata", write access to "Account/Watching".
+A **classic** personal access token with the `repo` scope is required. (To quote the docs: "This endpoint does not work with GitHub App user access tokens, GitHub App installation access tokens, or fine-grained personal access tokens.")
 
 ## Inputs
 
