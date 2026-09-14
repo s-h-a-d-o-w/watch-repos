@@ -5,7 +5,7 @@ export type IgnoreMatcher = (repo: {
 
 const REGEX_LITERAL = /^\/(?<source>.*)\/(?<flags>[a-z]*)$/su;
 
-function parseList(raw: string): string[] {
+function parseList(raw: string) {
   return raw
     .split(/[\n,]/u)
     .map((entry) => entry.trim())

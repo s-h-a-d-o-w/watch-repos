@@ -1,7 +1,7 @@
 import { listOwnedRepositories, watch } from "./github.ts";
 import { parseIgnore } from "./parseIgnore.ts";
 
-function requireEnv(name: string): string {
+function requireEnv(name: string) {
   const value = process.env[name]?.trim();
 
   if (!value) {
