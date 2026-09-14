@@ -68,37 +68,33 @@ async function watch(token: string, fullName: string): Promise<void> {
   });
 }
 
-async function main(): Promise<void> {
-  const token = requireEnv("INPUT_TOKEN");
-  const isIgnored = parseIgnore(process.env["INPUT_IGNORE"]);
-  const includeArchived = process.env["INPUT_INCLUDE_ARCHIVED"] === "true";
+const token = requireEnv("INPUT_TOKEN");
+const isIgnored = parseIgnore(process.env["INPUT_IGNORE"]);
+const includeArchived = process.env["INPUT_INCLUDE_ARCHIVED"] === "true";
 
-  const repositories = await listOwnedRepositories(token);
-  let watched = 0;
+const repositories = await listOwnedRepositories(token);
+let watched = 0;
 
-  for (const repository of repositories) {
-    const skipReason = isIgnored({
-      name: repository.name,
-      fullName: repository.full_name,
-    })
-      ? "ignored"
-      : !includeArchived && repository.archived
-        ? "archived"
-        : undefined;
+for (const repository of repositories) {
+  const skipReason = isIgnored({
+    name: repository.name,
+    fullName: repository.full_name,
+  })
+    ? "ignored"
+    : !includeArchived && repository.archived
+      ? "archived"
+      : undefined;
 
-    if (skipReason) {
-      console.log(`Skipping ${repository.full_name} (${skipReason})`);
-      continue;
-    }
-
-    await watch(token, repository.full_name);
-    watched += 1;
-    console.log(`Watching ${repository.full_name}`);
+  if (skipReason) {
+    console.log(`Skipping ${repository.full_name} (${skipReason})`);
+    continue;
   }
 
-  console.log(
-    `Done. Watching ${watched} of ${repositories.length} repositories.`,
-  );
+  await watch(token, repository.full_name);
+  watched += 1;
+  console.log(`Watching ${repository.full_name}`);
 }
 
-await main();
+console.log(
+  `Done. Watching ${watched} of ${repositories.length} repositories.`,
+);

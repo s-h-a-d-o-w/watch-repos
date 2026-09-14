@@ -25,10 +25,6 @@ function parseList(raw: string): string[] {
     .filter((entry) => entry.length > 0);
 }
 
-/**
- * Accepts either a regular expression literal (e.g. `/^dotfiles/i`) or a list of
- * repository names (JSON array, or comma/newline separated).
- */
 export function parseIgnore(raw: string | undefined): IgnoreMatcher {
   const value = raw?.trim() ?? "";
 
@@ -37,16 +33,13 @@ export function parseIgnore(raw: string | undefined): IgnoreMatcher {
   }
 
   const regexLiteral = REGEX_LITERAL.exec(value);
-
   if (regexLiteral?.groups) {
     const { source = "", flags = "" } = regexLiteral.groups;
     const regex = new RegExp(source, flags.replace("g", ""));
-
     return ({ name, fullName }) => regex.test(name) || regex.test(fullName);
   }
 
   const names = new Set(parseList(value).map((entry) => entry.toLowerCase()));
-
   return ({ name, fullName }) =>
     names.has(name.toLowerCase()) || names.has(fullName.toLowerCase());
 }
