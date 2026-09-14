@@ -46,5 +46,5 @@ for (const repository of repositories) {
 }
 
 console.log(
-  `Done. Watching ${watched} of ${repositories.length} repositories.`,
+  `Done. Turned on "watch" for ${watched} of ${repositories.length} repositories.`,
 );
