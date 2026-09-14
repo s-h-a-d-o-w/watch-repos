@@ -6,19 +6,6 @@ export type IgnoreMatcher = (repo: {
 const REGEX_LITERAL = /^\/(?<source>.*)\/(?<flags>[a-z]*)$/su;
 
 function parseList(raw: string): string[] {
-  if (raw.startsWith("[")) {
-    const parsed: unknown = JSON.parse(raw);
-
-    if (
-      !Array.isArray(parsed) ||
-      parsed.some((entry) => typeof entry !== "string")
-    ) {
-      throw new Error("The ignore list must be an array of strings.");
-    }
-
-    return parsed as string[];
-  }
-
   return raw
     .split(/[\n,]/u)
     .map((entry) => entry.trim())

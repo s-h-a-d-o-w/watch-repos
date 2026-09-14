@@ -15,5 +15,4 @@ jobs:
         with:
           token: ${{ secrets.WATCH_REPOS_TOKEN }}
           ignore: |
-            some-owner/some-repo
-            another-repo
+            my-os-basics

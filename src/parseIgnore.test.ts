@@ -25,23 +25,10 @@ describe(parseIgnore, () => {
     expect(ignored("/^FORK-/i")).toStrictEqual(["fork-thing"]);
   });
 
-  it("matches a JSON array", () => {
-    expect(ignored('["Dotfiles", "other/secrets"]')).toStrictEqual([
-      "dotfiles",
-      "secrets",
-    ]);
-  });
-
   it("matches comma or newline separated values", () => {
     expect(ignored("dotfiles,\n other/secrets \n")).toStrictEqual([
       "dotfiles",
       "secrets",
     ]);
-  });
-
-  it("rejects a non-string array", () => {
-    expect(() => parseIgnore("[1]")).toThrow(
-      "The ignore list must be an array of strings.",
-    );
   });
 });

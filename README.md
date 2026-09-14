@@ -32,7 +32,6 @@ as well as `owner/repo`, list entries are compared case-insensitively.
 
 ```yaml
 ignore: /^fork-/i # regular expression
-ignore: '["dotfiles", "owner/secrets"]' # JSON array
 ignore: dotfiles, owner/secrets # comma separated
 ignore: | # newline separated
   dotfiles
