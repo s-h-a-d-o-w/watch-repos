@@ -1,0 +1,35 @@
+name: Watch Repos
+description: Turns on "watch" for all repositories owned by the user the token belongs to.
+
+inputs:
+  token:
+    description: >-
+      Personal access token with the `repo` scope (classic) or read/write access to
+      "Repository metadata" and "Watching" (fine-grained). `GITHUB_TOKEN` is not sufficient.
+    required: true
+  ignore:
+    description: >-
+      Repositories to skip. Either a regular expression literal (e.g. `/^fork-/i`) or a list of
+      repository names as a JSON array or as comma/newline separated values. Names are matched
+      against both `repo` and `owner/repo`.
+    required: false
+    default: ""
+  include-archived:
+    description: Whether archived repositories should be watched too.
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v5
+      with:
+        node-version: 24
+
+    - run: node "$ACTION_PATH/src/index.ts"
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_IGNORE: ${{ inputs.ignore }}
+        INPUT_INCLUDE_ARCHIVED: ${{ inputs.include-archived }}

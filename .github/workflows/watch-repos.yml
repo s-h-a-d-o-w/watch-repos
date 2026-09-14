@@ -1,0 +1,19 @@
+name: Watch repos
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "8 2 * * *" # every day at 2:08 UTC
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: ./
+        with:
+          token: ${{ secrets.WATCH_REPOS_TOKEN }}
+          ignore: |
+            some-owner/some-repo
+            another-repo
