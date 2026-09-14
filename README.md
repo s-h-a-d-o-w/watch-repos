@@ -1,7 +1,7 @@
 # watch-repos
 
 GitHub Action that turns on "watch" (all activity) for every repository owned by the user the
-supplied token belongs to.
+supplied token belongs to. (Uses [this GitHub API](https://docs.github.com/en/rest/activity/watching?apiVersion=2026-03-10#set-a-repository-subscription).)
 
 ## Usage
 

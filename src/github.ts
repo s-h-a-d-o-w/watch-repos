@@ -13,7 +13,7 @@ async function request(token: string, url: string, init?: RequestInit) {
       accept: "application/vnd.github+json",
       authorization: `Bearer ${token}`,
       "content-type": "application/json",
-      "x-github-api-version": "2022-11-28",
+      "x-github-api-version": "2026-03-10",
     },
   });
 
