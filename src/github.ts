@@ -30,10 +30,9 @@ function nextPageUrl(linkHeader: string | null) {
   return linkHeader?.match(/<(?<url>[^>]+)>;\s*rel="next"/u)?.groups?.["url"];
 }
 
-export async function listOwnedRepositories(token: string) {
+async function listAllPages(token: string, initialUrl: string) {
   const repositories: Repository[] = [];
-  let url: string | undefined =
-    `${API_URL}/user/repos?affiliation=owner&per_page=100`;
+  let url: string | undefined = initialUrl;
 
   while (url) {
     const response = await request(token, url);
@@ -43,6 +42,22 @@ export async function listOwnedRepositories(token: string) {
   }
 
   return repositories;
+}
+
+export function listOwnedRepositories(token: string) {
+  return listAllPages(
+    token,
+    `${API_URL}/user/repos?affiliation=owner&per_page=100`,
+  );
+}
+
+export async function listWatchedRepositories(token: string) {
+  const repositories = await listAllPages(
+    token,
+    `${API_URL}/user/subscriptions?per_page=100`,
+  );
+
+  return new Set(repositories.map((repository) => repository.full_name));
 }
 
 export async function watch(token: string, fullName: string) {

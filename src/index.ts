@@ -1,4 +1,8 @@
-import { listOwnedRepositories, watch } from "./github.ts";
+import {
+  listOwnedRepositories,
+  listWatchedRepositories,
+  watch,
+} from "./github.ts";
 import { parseIgnore } from "./parseIgnore.ts";
 
 function requireEnv(name: string) {
@@ -16,6 +20,7 @@ const isIgnored = parseIgnore(process.env["INPUT_IGNORE"]);
 const includeArchived = process.env["INPUT_INCLUDE_ARCHIVED"] === "true";
 
 const repositories = await listOwnedRepositories(token);
+const alreadyWatched = await listWatchedRepositories(token);
 let watched = 0;
 
 for (const repository of repositories) {
@@ -26,7 +31,9 @@ for (const repository of repositories) {
     ? "ignored"
     : !includeArchived && repository.archived
       ? "archived"
-      : undefined;
+      : alreadyWatched.has(repository.full_name)
+        ? "already watched"
+        : undefined;
 
   if (skipReason) {
     console.log(`Skipping ${repository.full_name} (${skipReason})`);
