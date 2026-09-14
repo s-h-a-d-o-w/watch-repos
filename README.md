@@ -14,8 +14,7 @@ supplied token belongs to.
       another-repo
 ```
 
-`GITHUB_TOKEN` cannot manage watching, so a personal access token is required - classic with the
-`repo` scope, or fine-grained with read/write access to "Repository metadata" and "Watching".
+`GITHUB_TOKEN` cannot manage watching, so a personal access token is required - read access to "Repository/Metadata", write access to "Account/Watching".
 
 ## Inputs
 
