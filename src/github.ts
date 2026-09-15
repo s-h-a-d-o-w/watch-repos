@@ -1,6 +1,6 @@
 const API_URL = "https://api.github.com";
 
-export type Repository = {
+type Repository = {
   name: string;
   full_name: string;
   archived: boolean;
